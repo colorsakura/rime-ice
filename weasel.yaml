@@ -48,67 +48,56 @@ global_ascii: false                        # 切换为 ascii 模式时，是否�
 # [style]
 # 字体；候选项、候选窗口的行为、布局及样式
 style:
-  color_scheme: purity_of_form_custom      # 默认配色方案
-  # color_scheme_dark: nord                # 深色模式下，Weasel 的配色方案，Windows 10 1809+ 可用
+  color_scheme: win11_weasel # 主题方案
+  color_scheme_dark: win11_weasel_dark # 暗色模式下的主题方案
 
-  # 全局字体
-  # 格式：字体1:起始码位:结束码位:字重:字形,字体2……，字体会依次 fallback
-  # 详细设定请参考 <https://github.com/rime/weasel/wiki/字體設定>
-  font_face: "Segoe UI Emoji, Microsoft YaHei, SF Pro, Noto Color Emoji"
-  label_font_face: "Microsoft YaHei"       # 标签字体
-  comment_font_face: "Microsoft YaHei"     # 注释字体
-  font_point: 14                           # 全局字体字号
-  label_font_point: 14                     # 标签字体字号，不设定 fallback 到 font_point
-  comment_font_point: 13                   # 注释字体字号，不设定 fallback 到 font_point
+  # 这里提供三种不同主题预设，自行切换注释即可
+  # 必须启用其中一种预设！
 
-  inline_preedit: true                     # 行内显示预编辑区：true；false
-  preedit_type: composition                # 预编辑区内容：composition（编码）； preview（选中的候选）；preview_all（全部候选）
+  # Windows 11 风格预设
+  # 感谢 luminosara https://github.com/LufsX/rime/pull/22、https://github.com/LufsX/rime/pull/26
+  __include: win11_preset
 
-  fullscreen: false                        # 候选窗口全屏显示：true；false
-  horizontal: true                         # 候选项横排：true；false
-  vertical_text: false                     # 竖排文本：true；false
-  # text_orientation: horizontal           # 文本排列方向，效果和 `vertical_text` 相同：horizontal；vertical
-  vertical_text_left_to_right: false       # 竖排方向是否从左到右：true；false
-  vertical_text_with_wrap: false           # 文本竖排模式下，自动换行：true；false
-  vertical_auto_reverse: false             # 文本竖排模式下，候选窗口位于光标上方时倒序排列：true；false
+  # Windows 10 MDL2 风格预设
+  # 此项风格建议使用 win10_MDL 为前缀的主题方案
+  # 感谢 fbewivpjsbsby https://github.com/LufsX/rime/discussions/29
+  # __include: win10_MDL_preset
 
-  label_format: "%s"                       # 标签字符：例如 %s. 效果为 1. 2. 3. ....
-  mark_text: ""                            # 标记字符，显示在选中的候选标签前，需要在配色方案中指定颜色；如该项为空字符串 "" 而配色方案中 hilited_mark_color 非透明色，则显示 Windows 11 输入法风格标记
-  ascii_tip_follow_cursor: false           # 切换 ASCII 模式时，提示跟随鼠标，而非输入光标
-  enhanced_position: true                  # 无法定位候选框时，在窗口左上角显示候选框：true；false
-  display_tray_icon: false                 # 托盘显示独立于语言栏的额外图标：true；false
-  antialias_mode: default                  # 次像素反锯齿设定：default；force_dword；cleartype；grayscale；aliased
-  candidate_abbreviate_length: 30          # 候选项略写，超过此数字则用省略号代替。设置为 0 则不启用此功能
-  mouse_hover_ms: 0                        # ! 已弃用。鼠标悬停选词响应时间（ms），设置为 0 时禁用该功能
-  hover_type: none                         # 鼠标在候选窗口悬停时：none（无动作）；hilite（选中鼠标下的候选）；semi_hilite（高亮鼠标下的候选）
+  # Windows 10 风格预设
+  # 感谢 luminosara https://github.com/LufsX/rime/pull/22、https://github.com/LufsX/rime/pull/26
+  # __include: win10_preset
 
-  paging_on_scroll: true                   # 在候选窗口上滑动滚轮的行为：true（翻页）；false （选中下一个候选）
-  click_to_capture: false                  # 鼠标点击候选项，创建截图：true；false
+  # 以下是其它的设置
 
-  layout:
-    baseline: 0                            # 字号百分比，与 linespacing 一同设置可解决字体跳动问题，设置为 0 为禁用
-    linespacing: 0                         # 字号百分比，参考 <https://github.com/rime/weasel/pull/1177>
-    align_type: center                     # 标签、候选文字、注解文字之间的相对对齐方式：top ; center ; bottom
-    max_height: 600                        # 候选框最大高度，文本竖排模式下如高度超此尺寸则换列显示候选，设置为 0 不启用此功能
-    max_width: 0                           # 候选框最大宽度，horizontal 布局如宽超此尺寸则换行显示候选，设置为 0 不启用此功能
-    min_height: 0                          # 候选框最小高度
-    min_width: 10                          # 候选框最小宽度
-    border_width: 2                        # 边框宽度；又名 border
-    margin_x: 8                            # 主体元素和候选框的左右边距；为负值时，不显示候选框
-    margin_y: 8                            # 主体元素的上下边距；为负值时，不显示候选框
-    spacing: 13                            # inline_preedit 为否时，编码区域和候选区域的间距
-    candidate_spacing: 22                  # 候选项之间的间距
-    hilite_spacing: 6                      # 候选项和相应标签的间距
-    hilite_padding: 8                      # 高亮区域和内部文字的间距，影响高亮区域大小
-    # hilite_padding_x: 8                  # 高亮区域和内部文字的左右间距，如无特殊指定则依 hilite_padding 设置
-    # hilite_padding_y: 8                  # 高亮区域和内部文字的上下间距，如无特殊指定则依 hilite_padding 设置
-    shadow_radius: 0                       # 阴影区域半径，为 0 不显示阴影；需要同时在配色方案中指定非透明的阴影颜色
-    shadow_offset_x: 4                     # 阴影左右偏移距离
-    shadow_offset_y: 4                     # 阴影上下偏移距离
-    corner_radius: 8                       # 候选窗口圆角半径
-    round_corner: 8                        # 候选背景色块圆角半径，又名 hilited_corner_radius
-    # type: vertical                       # 布局设置，效果和 style 下的设置相同：
-                                           # horizontal（横向）；vertical（竖向） ; vertical_text（竖排文本） ; vertical+fullscreen（全屏） ; horizontal+fullscreen（横向全屏）
+  antialias_mode: cleartype # 抗锯齿模式
+  ascii_tip_follow_cursor: false # 切换 ASCII 模式时，提示跟随光标
+  display_tray_icon: false # 显示系统托盘图标
+  fullscreen: false # 演示模式（全屏的輸入窗口）
+
+  click_to_capture: false # 点击输入法时捕获截图到剪贴板
+  hover_type: semi_hilite # 鼠标悬停行为 none(无动作); hilite(选中鼠标下的候选); semi_hilite(高亮鼠标下的候选)
+  paging_on_scroll: false # 鼠标滚轮翻页候选栏
+
+  inline_preedit: true # 在光标位置显示预编辑文本
+  preedit_type: composition # 预编辑文本类型 composition(编码); preview(高亮候选); preview_all(全部候选)
+  candidate_abbreviate_length: 0 # 最长候选长度，多出来的将被…代替，值为 0 或将这行注释禁用此功能
+
+  horizontal: true # 水平排列候选栏
+  font_face: Segoe UI Emoji:30:39, Noto Color Emoji, Microsoft YaHei # 主要字体
+  label_font_face: Microsoft YaHei # 标签字体
+  comment_font_face: Microsoft YaHei # 注释字体
+  font_point: 12 # 主要字体大小
+  label_font_point: 12 # 标签字体大小
+  comment_font_point: 12 # 注释字体大小
+  mark_text: "" # 高亮标记字符，显示在选中的候选标签前
+
+  vertical_auto_reverse: false # 垂直排列时自动反转顺序
+  vertical_text: false # 垂直文本显示
+  vertical_text_left_to_right: false # 垂直文本从左到右显示
+  vertical_text_with_wrap: false # 垂直文本自动换行
+
+  layout/baseline: 0 # 基线高度百分比，0 即为禁用
+  layout/linespacing: 0 # 行高百分比，0 即为禁用，该项大于 100 可解决因字体导致的候选栏高度闪烁问题（需要同时设置基线高度 baseline）
 # [End of <style>]
 
 # [preset_color_schemes]
@@ -686,4 +675,253 @@ preset_color_schemes:
     hilited_candidate_back_color: 0xd8bf00
     comment_text_color: 0x808080
     hilited_comment_text_color: 0x444444
+
+  win10:
+    candidate_text_color: 0x000000
+    comment_text_color: 0x888888
+    text_color: 0x000000
+    back_color: 0xffffff
+    hilited_text_color: 0x000000
+    hilited_back_color: 0xffffff
+    hilited_candidate_text_color: 0xffffff
+    hilited_candidate_back_color: 0xcc8f29
+    hilited_comment_text_color: 0xffffff
+    hilited_label_color: 0xffffff
+    label_color: 0x888888
+
+  macos_light:
+    author: "一方<liuour@gmail.com>"
+    back_color: 0xFFFFFF
+    border_color: 0xFFFFFF
+    text_color: 0x424242
+    hilited_back_color: 0xD75A00
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color: 0x999999
+    hilited_text_color: 0x999999
+    candidate_text_color: 0x3c3c3c
+    comment_text_color: 0x999999
+    label_color: 0x999999
+
+  macos_dark:
+    author: "一方<liuour@gmail.com>"
+    back_color: 0x252a2e
+    border_color: 0x050505
+    text_color: 0x424242
+    hilited_back_color: 0xD75A00
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color: 0x999999
+    hilited_text_color: 0x999999
+    candidate_text_color: 0xe9e9ea
+    comment_text_color: 0x999999
+    label_color: 0x999999
+
+  macos12_light:
+    name: "高仿亮色 macOS"
+    author: "Lufs X <i@isteed.cc>"
+
+    back_color: 0xFFFFFF
+    border_color: 0xFFFFFF
+    candidate_text_color: 0xD8000000
+    comment_text_color: 0x3F000000
+    label_color: 0x7F7F7F
+    hilited_candidate_back_color: 0xD05925
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_comment_text_color: 0x808080
+    hilited_candidate_label_color: 0xFFFFFF
+    text_color: 0x3F000000
+    hilited_text_color: 0xD8000000
+
+  macos12_dark:
+    name: "高仿暗色 macOS"
+    author: "Lufs X <i@isteed.cc>"
+
+    back_color: 0x1E1F24
+    border_color: 0x1E1F24
+    candidate_text_color: 0xE8E8E8
+    comment_text_color: 0x3F000000
+    label_color: 0x7C7C7C
+    hilited_candidate_back_color: 0xDA6203
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_comment_text_color: 0x808080
+    hilited_candidate_label_color: 0xFFE7D6
+    text_color: 0x3F000000
+    hilited_text_color: 0xD8000000
+
+  win10_weasel:
+    author: "luminosa"
+    back_color: 0xF3F3F3 # 背景颜色 颜色均取色自 Windows 10 默认
+    border_color: 0xDBDCDC # 边框颜色
+    candidate_text_color: 0x000000 # 候选文字颜色
+    hilited_candidate_back_color: 0xFFD8A6 # 高亮颜色
+    hilited_label_color: 0x6F6F6F # 高亮序号颜色
+    hilited_mark_color: 0x00000000 # 此项不生效
+    label_color: 0x6F6F6F # 候选数字颜色
+    shadow_color: 0x20000000 # 阴影颜色，新版小狼毫 CI 更改了绘制，若无法看到阴影，请更改为 000000，观察是否能正常绘制阴影
+    text_color: 0x000000 # 拼音文字颜色
+
+  win11_weasel:
+    name: "Windows 11 默认"
+    author: "luminosa"
+    back_color: 0xF9F9F9 # 背景颜色 颜色均取色自 Windows 11 默认
+    border_color: 0xE7E7E7 # 边框颜色
+    candidate_text_color: 0x000000 # 候选文字颜色
+    hilited_candidate_back_color: 0xF0F0F0 # 高亮颜色
+    hilited_label_color: 0x727272 # 高亮序号颜色
+    hilited_mark_color: 0xFFD8A6 # 此项生效，前面那|的颜色，更新到支持的小狼毫 CI 版本才会生效
+    label_color: 0x727272 # 候选数字颜色
+    shadow_color: 0x20000000 # 阴影颜色，新版小狼毫 CI 更改了绘制，若无法看到阴影，请更改为 000000，观察是否能正常绘制阴影
+    text_color: 0x000000 # 拼音文字颜色
+
+  win11_weasel_dark:
+    name: "Windows 11 默认／深色"
+    author: "Lufs X <i@isteed.cc>"
+    back_color: 0x2C2C2C # 背景颜色 颜色均取色自 Windows 11 默认
+    border_color: 0x333333 # 边框颜色
+    candidate_text_color: 0xFFFFFF # 候选文字颜色
+    hilited_candidate_back_color: 0x383838 # 高亮颜色
+    hilited_label_color: 0xCFCFCF # 高亮序号颜色
+    hilited_mark_color: 0x595959 # 此项生效，前面那|的颜色，更新到支持的小狼毫 CI 版本才会生效
+    label_color: 0x727272 # 候选数字颜色
+    shadow_color: 0x20000000 # 阴影颜色，新版小狼毫 CI 更改了绘制，若无法看到阴影，请更改为 000000，观察是否能正常绘制阴影
+    text_color: 0xFFFFFF # 拼音文字颜色
+
+  win10_MDL_ayaya:
+    name: "Windows10 文文／Ayaya"
+    author: "Lufs X <i@isteed.cc>"
+
+    back_color: 0xFFFFFF
+    candidate_text_color: 0x121212
+    comment_text_color: 0x8E8E8E
+    hilited_candidate_back_color: 0xECE4FC
+    hilited_label_color: 0xB18FF4
+    hilited_candidate_text_color: 0x7A40EC
+    label_color: 0x888785
+    text_color: 0x8100EB
+
+  win10_MDL_ayaya_dark:
+    name: "Windows10 文文／Ayaya／深色"
+    author: "Lufs X <i@isteed.cc>"
+
+    back_color: 0x000000
+    candidate_text_color: 0xD2D2D2
+    comment_text_color: 0x8E8E8E
+    hilited_candidate_back_color: 0x2C1E3C
+    hilited_label_color: 0xA483EC
+    hilited_candidate_text_color: 0x7036E2
+    label_color: 0x888785
+    text_color: 0x8100EB
+
+  win10_MDL_deepgrey:
+    name: "Windows10 Deepgrey"
+    author: fbewivpjsbsby
+
+    text_color: 0x000000
+    candidate_text_color: 0x000000
+    back_color: 0xFFFFFF
+    border_color: 0x7E7969
+    hilited_text_color: 0xFFFFFF
+    hilited_back_color: 0x7E7969
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_candidate_back_color: 0x7E7969
+    hilited_label_color: 0xffffff
+    comment_text_color: 0x888888
+    hilited_comment_text_color: 0xffffff
+
+  win10_MDL_blue:
+    name: "Windows 10 Blue"
+    author: fbewivpjsbsby
+    candidate_text_color: 0x000000
+    comment_text_color: 0x888888
+    text_color: 0x000000
+    back_color: 0xffffff
+    border_color: 0xcc8f29
+    hilited_text_color: 0x000000
+    hilited_back_color: 0xffffff
+    hilited_candidate_text_color: 0xffffff
+    hilited_candidate_back_color: 0xcc8f29
+    hilited_comment_text_color: 0xffffff
+    hilited_label_color: 0xffffff
+    label_color: 0x888888
+
+  win10_MDL_darkblue:
+    name: "Windows 10 Dark Blue"
+    author: fbewivpjsbsby
+    candidate_text_color: 0xf2f2f2
+    comment_text_color: 0x888888
+    text_color: 0xffffff
+    back_color: 0x1f1f1f
+    border_color: 0xa37220
+    hilited_text_color: 0xffffff
+    hilited_back_color: 0x1f1f1f
+    hilited_candidate_text_color: 0xf2f2f2
+    hilited_candidate_back_color: 0xa37220
+    hilited_comment_text_color: 0xffffff
+    hilited_label_color: 0xf2f2f2
+    label_color: 0x888888
+
+win11_preset:
+  label_format: "\u2006%s" # 候选栏标签格式
+  layout:
+    align_type: center # 布局对齐方式
+    max_width: 0 # 最大宽度限制
+    min_width: 80 # 最小宽度限制
+    min_height: 0 # 最小高度限制
+    max_height: 0 # 最大高度限制
+    border_width: 1 # 窗口边框宽度
+    margin_x: 6 # 窗口左右边距
+    margin_y: 6 # 窗口上下边距
+    spacing: 10 # 候选栏间距
+    hilite_spacing: 10 # 高亮显示间距
+    shadow_offset_x: 3 # 阴影 X 轴偏移
+
+    candidate_spacing: 10 # 候选栏内部间距
+    corner_radius: 5 # 候选圆角半径
+    hilite_padding: 5 # 高亮高度
+    hilite_padding_x: 2 # 高亮 X 横向方向边距
+    hilite_padding_y: 2 # 高亮 Y 纵向方向边距
+    round_corner: 5 # 高亮圆角
+    shadow_offset_y: 0 # 阴影 Y 轴偏移
+    shadow_radius: 0 # 阴影半径
+
+win10_preset:
+  label_format: "%s" # 候选栏标签格式
+  layout:
+    align_type: center # 布局对齐方式
+    max_width: 0 # 最大宽度限制
+    min_width: 90 # 最小宽度限制
+    min_height: 0 # 最小高度限制
+    max_height: 0 # 最大高度限制
+    border_width: 2 # 窗口边框宽度
+    margin_x: 7 # 窗口左右边距
+    margin_y: 7 # 窗口上下边距
+    spacing: 10 # 候选栏间距
+    hilite_spacing: 10 # 高亮显示间距
+    shadow_offset_x: 7 # 阴影 X 轴偏移
+
+    candidate_spacing: 10 # 候选栏内部间距
+    corner_radius: 10 # 候选条圆角，不需要圆角设置为 0
+    hilite_padding: 8 # 高亮高度
+    hilite_padding_x: 8 # 高亮 x 横向方向边距，可以自行调整
+    hilite_padding_y: 8 # 高亮 y 纵向方向边距
+    round_corner: 0 # 高亮圆角，小狼毫天圆地方此项可设置为 0，也可自行调整
+    shadow_offset_y: 4 # 阴影 Y 轴偏移
+    shadow_radius: 10 # 阴影半径
+
+win10_MDL_preset:
+  label_format: "%s"
+  font_point: 13
+  label_font_point: 9
+  layout:
+    border_width: 1
+    margin_x: 7
+    margin_y: 2
+    spacing: 10
+    candidate_spacing: 20
+    corner_radius: 0
+    round_corner: 0
+    hilite_spacing: 5
+    hilite_padding_x: 15
+    hilite_padding_y: 6
 # [End of <preset_color_schemes>]
