@@ -428,8 +428,8 @@ speller:
   algebra:
     ### 模糊音
     # 声母
-    # - derive/^([zcs])h/$1/          # zh* ch* sh* 派生出 z* c* s*
-    # - derive/^([zcs])([^h])/$1h$2/  # z* c* s*    派生出 zh* ch* sh*
+    - derive/^([zcs])h/$1/          # zh* ch* sh* 派生出 z* c* s*
+    - derive/^([zcs])([^h])/$1h$2/  # z* c* s*    派生出 zh* ch* sh*
     # - derive/^l/n/  # 解释：为 l 开头的拼写派生出 n 开头，即 nai 也可以输出 lai（来、莱、赖……）
     # - derive/^n/l/  #      lai 可输出 nai（奶、乃、奈……）。 可以单向或成对儿启用模糊音
     # - derive/^f/h/
@@ -440,10 +440,10 @@ speller:
     # - derive/^k/g/
     # 韵母
     # - derive/ang$/an/
-    # - derive/an$/ang/
+    - derive/an$/ang/
     # - derive/eng$/en/
-    # - derive/en$/eng/
-    # - derive/in$/ing/
+    - derive/en$/eng/
+    - derive/in$/ing/
     # - derive/ing$/in/
     # - derive/ian$/iang/
     # - derive/iang$/ian/
@@ -494,15 +494,15 @@ speller:
     - derive/([zcs])h(a|e|i|u|ai|ei|an|en|ou|uo|ua|un|ui|uan|uai|uang|ang|eng|ong)$/h$1$2/  # hzi → zhi
     - derive/([zcs])h([aeiu])$/$1$2h/  # zih → zhi
     # # ia
-    # - derive/([qjx])ia$/$1ai/  # qai → qia
+    - derive/([qjx])ia$/$1ai/  # qai → qia
     # # an
-    # - derive/([wrtypsdfghklzcbnm])an$/$1na/  # dna → dan
+    - derive/([wrtypsdfghklzcbnm])an$/$1na/  # dna → dan
     # # en
-    # - derive/([wrpsdfghklzcbnm])en$/$1ne/  # rne → ren
+    - derive/([wrpsdfghklzcbnm])en$/$1ne/  # rne → ren
     # # in
-    # - derive/([qypjlxbnm])in$/$1ni/  # qni → qin
+    - derive/([qypjlxbnm])in$/$1ni/  # qni → qin
     # # un
-    # - derive/([qrtysdghjklzxc])un$/$1nu/  # qnu → qun
+    - derive/([qrtysdghjklzxc])un$/$1nu/  # qnu → qun
     # # ian
     # - derive/([qtpdjlxbnm])ian$/$1ain/
 ########## END
