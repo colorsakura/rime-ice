@@ -14,5 +14,5 @@ func getRimeDirForPlatform() string {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	return filepath.Join(u.HomeDir, ".config", "rime")
+	return filepath.Join(u.HomeDir, ".local/share/fcitx5", "rime")
 }
