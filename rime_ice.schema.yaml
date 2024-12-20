@@ -71,7 +71,7 @@ engine:
     - lua_translator@*calc_translator    # 计算器
     - lua_translator@*force_gc           # 暴力 GC
   filters:
-		- lua_filter@*is_in_user_dict                   # 标记用户词
+		- lua_filter@*is_fn_user_dict                   # 标记用户词
     - lua_filter@*corrector                         # 错音错字提示
     - reverse_lookup_filter@radical_reverse_lookup  # 部件拆字滤镜
     - lua_filter@*autocap_filter                    # 英文自动大写
