@@ -54,6 +54,9 @@ Hugo	hugo
 goto	goto
 domain	domain
 TODO	todo
+FIXME	fixme
+ISSUE	issue
+README	readme
 Dota	dota
 main	main
 Amazon	amazon
