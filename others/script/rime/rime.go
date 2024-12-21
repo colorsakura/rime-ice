@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	mapset "github.com/deckarep/golang-set/v2"
 	"log"
 	"os"
 	"path"
@@ -12,6 +11,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	mapset "github.com/deckarep/golang-set/v2"
 )
 
 // 一个词的组成部分
@@ -28,10 +29,14 @@ var (
 	EmojiPath    string
 	HanziPath    string
 	BasePath     string
+	SogouPath    string
+	ZhwikiPath   string
 	ExtPath      string
 	TencentPath  string
 	HanziSet     mapset.Set[string]
 	BaseSet      mapset.Set[string]
+	SogouSet     mapset.Set[string]
+	ZhwikiSet    mapset.Set[string]
 	ExtSet       mapset.Set[string]
 	TencentSet   mapset.Set[string]
 	需要注音TXT      string
@@ -53,11 +58,15 @@ func init() {
 
 	HanziPath = filepath.Join(RimeDir, "cn_dicts/8105.dict.yaml")
 	BasePath = filepath.Join(RimeDir, "cn_dicts/base.dict.yaml")
+	SogouPath = filepath.Join(RimeDir, "cn_dicts/sogou.dict.yaml")
+	ZhwikiPath = filepath.Join(RimeDir, "cn_dicts/zhwiki.dict.yaml")
 	ExtPath = filepath.Join(RimeDir, "cn_dicts/ext.dict.yaml")
 	TencentPath = filepath.Join(RimeDir, "cn_dicts/tencent.dict.yaml")
 
 	HanziSet = readToSet(HanziPath)
 	BaseSet = readToSet(BasePath)
+	SogouSet = readToSet(SogouPath)
+	ZhwikiSet = readToSet(ZhwikiPath)
 	ExtSet = readToSet(ExtPath)
 	TencentSet = readToSet(TencentPath)
 

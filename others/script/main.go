@@ -46,6 +46,8 @@ func main() {
 	// _type: 1 只有汉字 2 汉字+注音 3 汉字+注音+权重 4 汉字+权重
 	rime.Check(rime.HanziPath, 3)
 	rime.Check(rime.BasePath, 3)
+	rime.Check(rime.SogouPath, 2)
+	rime.Check(rime.ZhwikiPath, 2)
 	rime.Check(rime.ExtPath, 3)
 	rime.Check(rime.TencentPath, 4)
 	fmt.Println("--------------------------------------------------")
@@ -62,6 +64,8 @@ SORT:
 	rime.Sort(rime.HanziPath, 3)
 	rime.Sort(filepath.Join(rime.RimeDir, "cn_dicts/41448.dict.yaml"), 2)
 	rime.Sort(rime.BasePath, 3)
+	rime.Sort(rime.SogouPath, 2)
+	rime.Sort(rime.ZhwikiPath, 2)
 	rime.Sort(rime.ExtPath, 3)
 	rime.Sort(rime.TencentPath, 4)
 	rime.Sort(filepath.Join(rime.RimeDir, "en_dicts/en.dict.yaml"), 2)
