@@ -1,3 +1,5 @@
+**此仓库不再跟踪上游，使用前请优先查看上游仓库是否符合您的需求。**
+
 # 雾凇拼音
 
 [GPL-3.0-only](https://spdx.org/licenses/GPL-3.0-only.html)
