@@ -1,3 +1,5 @@
+**此仓库不再跟踪上游，使用前请优先查看上游仓库是否符合您的需求。**
+
 # 雾凇拼音
 
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL--3.0--only-34ad9b)](https://www.gnu.org/licenses/gpl-3.0.txt)
