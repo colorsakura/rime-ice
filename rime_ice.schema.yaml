@@ -26,8 +26,6 @@ switches:
     states: [ 中, Ａ ]
   - name: ascii_punct  # 中英标点
     states: [ ¥, $ ]
-  - name: traditionalization
-    states: [ 简, 繁 ]
   - name: emoji
     states: [ 💀, 😄 ]
     reset: 1
@@ -80,7 +78,6 @@ engine:
     - lua_filter@*long_word_filter                  # 长词优先（顺序要求：长词优先 > Emoji）
     - lua_filter@*reduce_english_filter             # 降低部分英语单词在候选项的位置
     - simplifier@emoji                              # Emoji
-    - simplifier@traditionalize                     # 简繁切换
     - lua_filter@*search@radical_pinyin             # 部件拆字辅码
     - uniquifier                                    # 去重
 
@@ -339,14 +336,6 @@ emoji:
   option_name: emoji         # 对应 switches 中的 name
   opencc_config: emoji.json  # 选择要加载的 OpenCC 配置
   inherit_comment: false     # 在 corrector.lua 及反查中，emoji 的 comment 显示为空
-
-
-# 简繁切换
-traditionalize:
-  option_name: traditionalization  # 对应 switches 中的 name
-  opencc_config: s2t.json          # s2t.json | s2hk.json | s2tw.json | s2twp.json （Rime 内置配置，在程序目录可找到）
-  tips: none                       # 转换提示: all 都显示 | char 仅单字显示 | none 不显示。
-  tags: [ abc, number, gregorian_to_lunar ]  # 限制在对应 tag，不对其他如反查的内容做简繁转换
 
 
 # 标点符号
