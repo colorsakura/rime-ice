@@ -327,10 +327,50 @@ speller:
   delimiter: " '"  # 第一位<空格>是拼音之间的分隔符；第二位<'>表示可以手动输入单引号来分割拼音。
   algebra:
     - erase/^xx$/
+    - erase/^hm$/
+    - erase/^m$/
+    - erase/^n$/
+    - erase/^ng$/
+
+    # 模糊音区域
+    # 依据个人情况修改注释～
+    # 注释格式：键盘的输入码 -> 转化后的输入码
+
+    # 声母部分
+    - derive/^([z])h/$1/ # z -> zh
+    - derive/^([z])([^h])/$1h$2/ # zh -> z
+    - derive/^([c])h/$1/ # c -> ch
+    - derive/^([c])([^h])/$1h$2/ # ch -> c
+    - derive/^([s])h/$1/ # s -> sh
+    - derive/^([s])([^h])/$1h$2/ # sh -> s
+    # - derive/^l/n/ # n -> l
+    # - derive/^n/l/ # l -> n
+    # - derive/^r/l/ # l -> r
+    # - derive/^r/y/ # y -> r
+    # - derive/^hu$/fu/ # fu -> hu
+    # - derive/^fu$/hu/ # hu -> fu
+
+    # 韵母部分
+    - derive/([^iu])([a])n$/$1$2ng/ # ang -> an
+    - derive/([^iu])([a])ng$/$1$2n/ # an -> ang
+    - derive/([e])n$/$1ng/ # eng -> en
+    - derive/([e])ng$/$1n/ # en -> eng
+    - derive/([i])n$/$1ng/ # ing -> in
+    - derive/([i])ng$/$1n/ # in -> ing
+    # - derive/([i])an$/$1ang/ # iang -> ian
+    # - derive/([i])ang$/$1an/ # ian -> iang
+    # 由于双拼特性，无需 uang <-> iang
+
+    # 其它模糊音
+    # - derive/^hui$/fei/ # fei -> hui
+    # - derive/^fei$/hui/ # hui -> fei
+    # - derive/^huang$/wang/ # wang -> huang
+    # - derive/^wang$/huang/ # huang -> wang
+    # - derive/^([bpmfw])eng$/$1ong/ # bpmfw 后接 ong -> bpmfw 后接 eng
+
+    # 自然码双拼码表
     - derive/^([jqxy])u$/$1v/
     - derive/^([aoe])([ioun])$/$1$1$2/
-    - derive/([ei])ng$/$1n/ # eng=>en ing=>in
-    - derive/([ei])n$/$1ng/ # en=>eng in=>ing
     - xform/^([aoe])(ng)?$/$1$1$2/
     - xform/iu$/Ⓠ/
     - xform/[iu]a$/Ⓦ/
