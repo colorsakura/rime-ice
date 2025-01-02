@@ -10,6 +10,7 @@ installation.yaml
 user.yaml
 *.custom.yaml
 !others/**/*.custom.yaml
+**.gram
 
 custom_phrase_double.txt
 others/script/scel2txt/out/*
