@@ -348,8 +348,8 @@ speller:
     - derive/([e])ng$/$1n/ # en -> eng
     - derive/([i])n$/$1ng/ # ing -> in
     - derive/([i])ng$/$1n/ # in -> ing
-    # - derive/([i])an$/$1ang/ # iang -> ian
-    # - derive/([i])ang$/$1an/ # ian -> iang
+    - derive/([i])an$/$1ang/ # iang -> ian
+    - derive/([i])ang$/$1an/ # ian -> iang
     # 由于双拼特性，无需 uang <-> iang
 
     # 其它模糊音
