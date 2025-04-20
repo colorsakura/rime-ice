@@ -5,7 +5,7 @@
 name: rime_ice
 version: "2025-04-01"
 import_tables:
-  - cn_dicts/basic     # 字表
+  - cn_dicts/base     # 字表
   - cn_dicts/core     # 基础词库
   - cn_dicts/sogou    # 热门词库
   - cn_dicts/ext      # 扩展词库
