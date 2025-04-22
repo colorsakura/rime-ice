@@ -19,7 +19,7 @@
 #              对于「长 chang zhang」这样不易区分的，全部注音并用勤劳的双手完成校对。
 # 需要注音的字词设定在 others/script/rime/需要注音.txt
 ---
-name: 8105
+name: base
 version: "2024-05-21"
 sort: by_weight
 ...
