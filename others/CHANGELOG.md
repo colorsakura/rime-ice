@@ -190,4 +190,3 @@
 ## 2023-05-08 ⚠️
 
 Lua 模块化 [a34c46a](https://github.com/iDvel/rime-ice/commit/a34c46ad34673d535dc1df4ef208ad4c7e3baf80) [b514049](https://github.com/iDvel/rime-ice/commit/b514049e33c7e0c8fccacec49faa3830bd7bdf26)
-
