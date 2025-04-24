@@ -315,12 +315,6 @@ speller:
   initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA
   delimiter: " '"  # 第一位<空格>是拼音之间的分隔符；第二位<'>表示可以手动输入单引号来分割拼音。
   algebra:
-    - erase/^xx$/
-    - erase/^hm$/
-    - erase/^m$/
-    - erase/^n$/
-    - erase/^ng$/
-
     # 模糊音区域
     # 依据个人情况修改注释～
     # 注释格式：键盘的输入码 -> 转化后的输入码
@@ -389,4 +383,4 @@ speller:
     - xform/(.)ou$/$1Ⓑ/
     - xform/in$/Ⓝ/
     - xlit/ⓆⓌⓇⓉⓎⓊⒾⓄⓅⓈⒹⒻⒼⒽⓂⒿⒸⓀⓁⓏⓍⓋⒷⓃ/qwrtyuiopsdfghmjcklzxvbn/
-    # - abbrev/^(.).+$/$1/  # 首字母简拼，开启后会导致 3 个字母时 kj'x 变成 k'jx 的问题
+    - abbrev/^(.).+$/$1/  # 首字母简拼，开启后会导致 3 个字母时 kj'x 变成 k'jx 的问题
