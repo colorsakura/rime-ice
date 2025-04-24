@@ -16,16 +16,17 @@ function M.func(input, env)
 	for cand in input:iter() do
 		-- 用户词库，加上*号
 		if cand.type == "user_phrase" then
-			cand.comment = "*"
+			cand.comment = "*" .. cand.comment
 		end
 		-- 用户置顶词
-		if cand.type == "user_table" then
-			cand.comment = cand.comment .. "⚡️"
-		end
+		-- TODO: 图标太丑了
+		-- if cand.type == "user_table" then
+		-- 	cand.comment = "⚡️" .. cand.comment
+		-- end
 
 		-- 整句联想，加上𑄗 符号
 		if cand.type == "sentence" then
-			cand.comment = "∞"
+			cand.comment = "∞" .. cand.comment
 		end
 		yield(cand)
 	end
