@@ -5,7 +5,7 @@
 # ------- 一些杂项，按需选择 -------
 ---
 name: others
-version: "2024-05-21"
+version: "2025.04.24"
 sort: by_weight
 ...
 ##### 容错词

@@ -1,6 +1,6 @@
 # Rime schema
 # encoding: utf-8
-# version: "2.10.0"
+# version: "2025.04.24"
 
 # 启用键盘皮肤
 enableKeyboardSkins: false

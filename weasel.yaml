@@ -13,7 +13,7 @@
 # WeaselSetup.exe /toggleascii - 设置系统快捷键用于切换 ASCII 模式（0.16.1 以上版本）
 
 # 部分选项需要将 Weasel 更新 16.0 及以上版本才能生效
-config_version: "2024-09-25"
+config_version: "2025.04.24"
 
 # [app_options]
 # 针对特定应用的设置

@@ -20,7 +20,7 @@
 # 需要注音的字词设定在 others/script/rime/需要注音.txt
 ---
 name: base
-version: "2024-05-21"
+version: "2025.04.24"
 sort: by_weight
 ...
 ### 字表

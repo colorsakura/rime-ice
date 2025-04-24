@@ -12,7 +12,7 @@ __include: rime_ice.schema.yaml:/
 schema:
   schema_id: t9
   name: 仓·九宫格
-  version: "2.0.0"
+  version: "2025.04.24"
   author:
     - Dvel
     - "[morse.hsiao](https://github.com/imfuxiao)"

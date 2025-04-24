@@ -17,7 +17,7 @@
 schema:
   schema_id: double_pinyin_ziguang
   name: 紫光双拼
-  version: "1"
+  version: "2025.04.24"
   author:
     - Dvel
   description: |
