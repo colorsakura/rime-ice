@@ -15,13 +15,13 @@ local M = {}
 
 function M.init(env)
     local config = env.engine.schema.config
-    env.keep_comment = config:get_bool('translator/keep_comments')
-    local delimiter = config:get_string('speller/delimiter')
-    if delimiter and #delimiter > 0 and delimiter:sub(1,1) ~= ' ' then
-        env.delimiter = delimiter:sub(1,1)
+    env.keep_comment = config:get_bool("translator/keep_comments")
+    local delimiter = config:get_string("speller/delimiter")
+    if delimiter and #delimiter > 0 and delimiter:sub(1, 1) ~= " " then
+        env.delimiter = delimiter:sub(1, 1)
     end
-    env.name_space = env.name_space:gsub('^*', '')
-    M.style = config:get_string(env.name_space) or '{comment}'
+    env.name_space = env.name_space:gsub("^*", "")
+    M.style = config:get_string(env.name_space) or "{comment}"
     M.corrections = {
         -- 错音
         ["hun dun"] = { text = "馄饨", comment = "hún tun" },
@@ -75,7 +75,7 @@ function M.init(env)
         ["tiao huan"] = { text = "调换", comment = "diào huàn" },
         ["tai xing shan"] = { text = "太行山", comment = "tài háng shān" },
         ["jie si di li"] = { text = "歇斯底里", comment = "xiē sī dǐ lǐ" },
-        ["fa xiao"] = { text = "发酵", comment = "fā jiào" }, 
+        ["fa xiao"] = { text = "发酵", comment = "fā jiào" },
         ["xiao mu jun"] = { text = "酵母菌", comment = "jiào mǔ jūn" },
         ["yin hong"] = { text = "殷红", comment = "yān hóng" },
         ["nuan he"] = { text = "暖和", comment = "nuǎn huo" },
@@ -124,7 +124,7 @@ function M.init(env)
         ["rou yi hua xu"] = { text = "柔荑花序", comment = "柔荑(tí)花序" },
         ["shou ru rou yi"] = { text = "手如柔荑", comment = "手如柔荑(tí)" },
         ["wen ting jun"] = { text = "温庭筠", comment = "温庭筠(yún)" },
-        ["zhu you tang"] = { text = "朱祐樘", comment = "朱祐樘(chēng)" },        
+        ["zhu you tang"] = { text = "朱祐樘", comment = "朱祐樘(chēng)" },
         ["guan ka"] = { text = "关卡", comment = "guān qiǎ" },
         ["san wei zhen huo"] = { text = "三昧真火", comment = "三昧(mèi)真火" },
         ["qing ping zhi mo"] = { text = "青𬞟之末", comment = "青𬞟(pín)之末" },
@@ -189,20 +189,20 @@ end
 function M.func(input, env)
     for cand in input:iter() do
         -- cand.comment 是目前输入的词汇的完整拼音
-        local pinyin = cand.comment:match("^［(.-)］$")
+        local prefix, pinyin = cand.comment:match("^([*+]?)%((.-)%)$")
         if pinyin and #pinyin > 0 then
             local correction_pinyin = pinyin
             if env.delimiter then
-                correction_pinyin = correction_pinyin:gsub(env.delimiter,' ')
+                correction_pinyin = correction_pinyin:gsub(env.delimiter, " ")
             end
             local c = M.corrections[correction_pinyin]
             if c and cand.text == c.text then
-                cand:get_genuine().comment = string.gsub(M.style, "{comment}", c.comment)
+                cand:get_genuine().comment = string.gsub(M.style, "{comment}", prefix .. c.comment)
             else
-                if env.keep_comment then
-                    cand:get_genuine().comment = string.gsub(M.style, "{comment}", pinyin)
+                if env.keep_comment or cand.preedit ~= pinyin then
+                    cand:get_genuine().comment = string.gsub(M.style, "{comment}", prefix .. pinyin)
                 else
-                    cand:get_genuine().comment = ""
+                    cand:get_genuine().comment = prefix .. ""
                 end
             end
         end
