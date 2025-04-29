@@ -186,6 +186,27 @@ function M.init(env)
     }
 end
 
+-- 分割字符串
+local function split(input, sep)
+    local result = {}
+    for part in input:gmatch("([^" .. sep .. "]+)") do
+        table.insert(result, part)
+    end
+    return result
+end
+
+-- 分割拼音并比较是否每一项的开头部分一致
+local function is_correction(correct, preedit, delimiter)
+    local correct_parts = split(correct, delimiter)
+    local preedit_parts = split(preedit, delimiter)
+    for i = 1, math.min(#correct_parts, #preedit_parts) do
+        if not correct_parts[i]:find("^" .. preedit_parts[i]) then
+            return true
+        end
+    end
+    return false
+end
+
 function M.func(input, env)
     for cand in input:iter() do
         -- cand.comment 是目前输入的词汇的完整拼音
@@ -199,8 +220,13 @@ function M.func(input, env)
             if c and cand.text == c.text then
                 cand:get_genuine().comment = string.gsub(M.style, "{comment}", prefix .. c.comment)
             else
-                if env.keep_comment or cand.preedit ~= pinyin then
-                    cand:get_genuine().comment = string.gsub(M.style, "{comment}", prefix .. pinyin)
+                -- 20241002 是否保持原本注释；如: 拼音
+                -- 20241215 如果不包含模糊拼音的矫正，依然删除注释
+                local correct_pinyin = pinyin
+                local preedit_pinyin = cand.preedit
+                local correction = is_correction(correct_pinyin, preedit_pinyin, env.delimiter or " ")
+                if env.keep_comment and correction then
+                    cand:get_genuine().comment = string.gsub(M.style, "{comment}", prefix .. correct_pinyin)
                 else
                     cand:get_genuine().comment = prefix .. ""
                 end
