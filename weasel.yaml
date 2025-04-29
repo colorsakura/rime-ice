@@ -83,12 +83,12 @@ style:
   candidate_abbreviate_length: 0 # 最长候选长度，多出来的将被…代替，值为 0 或将这行注释禁用此功能
 
   horizontal: true # 水平排列候选栏
-  font_face: Segoe UI Emoji:30:39, Noto Color Emoji, Microsoft YaHei # 主要字体
-  label_font_face: Microsoft YaHei # 标签字体
-  comment_font_face: Microsoft YaHei # 注释字体
+  font_face: Segoe UI Emoji:30:39, Noto Color Emoji, Microsoft YaHei UI # 主要字体
+  label_font_face: Microsoft YaHei UI # 标签字体
+  comment_font_face: Microsoft YaHei UI # 注释字体
   font_point: 12 # 主要字体大小
-  label_font_point: 12 # 标签字体大小
-  comment_font_point: 12 # 注释字体大小
+  label_font_point: 11 # 标签字体大小
+  comment_font_point: 11 # 注释字体大小
   mark_text: "" # 高亮标记字符，显示在选中的候选标签前
 
   vertical_auto_reverse: false # 垂直排列时自动反转顺序
