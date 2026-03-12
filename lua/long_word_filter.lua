@@ -9,8 +9,8 @@ function M.init(env)
     -- 提升 count 个词语，插入到第 idx 个位置，默认 2、4。
     local config = env.engine.schema.config
     env.name_space = env.name_space:gsub("^*", "")
-    M.count = config:get_int(env.name_space .. "/count") or 2
-    M.idx = config:get_int(env.name_space .. "/idx") or 4
+    M.count = config:get_int(env.name_space .. "/count") or 20
+    M.idx = config:get_int(env.name_space .. "/idx") or 2
 end
 
 function M.func(input)

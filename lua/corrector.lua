@@ -1,14 +1,46 @@
 --[[
-	错音错字提示。
-	示例：「给予」的正确读音是 ji yu，当用户输入 gei yu 时，在候选项的 comment 显示正确读音
-	示例：「按耐」的正确写法是「按捺」，当用户输入「按耐」时，在候选项的 comment 显示正确写法
+	Corrector - 错音错字提示过滤器
 
-	关闭此 Lua 时，同时需要关闭 translator/spelling_hints，否则 comment 里都是拼音
+	功能说明：
+		该 Lua 脚本作为 Rime 输入法的过滤器使用，用于纠正用户常见的错音和错字。
+		当用户输入错误的拼音或错别字时，会在候选项的 comment 区域显示正确的读音或写法。
 
-	为了让这个 Lua 同时适配全拼与双拼，使用 `spelling_hints` 生成的 comment（全拼拼音）作为通用的判断条件。
-	感谢大佬@[Shewer Lu](https://github.com/shewer)提供的思路。
-	
-	容错词在 cn_dicts/others.dict.yaml 中，有新增建议可以提个 issue
+	工作原理：
+		1. 错音纠正：当用户输入「给予」的错误读音 gei yu 时，在候选项的 comment 显示正确读音 jǐ yǔ
+		2. 错字纠正：当用户输入「按耐」时，在候选项的 comment 显示正确写法「按捺(nà)」
+		3. 依赖 translator/spelling_hints 生成的 comment（全拼拼音）作为通用的判断条件
+		4. 支持全拼和双拼输入方案
+
+	配置依赖：
+		- 需要开启 translator/spelling_hints 组件
+		- 如果关闭此 Lua 过滤器，也需要同时关闭 translator/spelling_hints，否则 comment 里都会显示拼音
+
+	配置项：
+		- translator/keep_comments: 是否保留第一个候选词的拼音注释
+		- speller/delimiter: 拼音分隔符（用于双拼方案）
+		- {name_space}: 自定义 comment 显示格式，默认为 "{comment}"
+
+	数据来源：
+		容错词数据定义在 M.corrections 表中，包含常见易错读音和易错字词。
+		新增容错词建议可以在 cn_dicts/others.dict.yaml 中提交，或向项目提 issue。
+
+	实现思路：
+		使用 spelling_hints 生成的全拼拼音作为统一的判断条件，这样可以同时适配
+		全拼和双拼输入方案。感谢 @Shewer Lu (https://github.com/shewer) 提供的思路。
+
+	核心函数：
+		- M.init(env): 初始化函数，读取配置并构建纠错数据表
+		- M.func(input, env): 过滤器主函数，遍历候选项并进行纠错处理
+		- split(input, sep): 分割字符串的辅助函数
+		- is_prefix_of_input(pinyin, preedit): 判断输入是否是拼音的前缀
+
+	使用示例：
+		输入「gei yu」→ 候选「给予」→ comment 显示「jǐ yǔ」
+		输入「an nai」→ 候选「按耐」→ comment 显示「按捺(nà)」
+
+	维护说明：
+		如需添加新的纠错条目，请在 M.corrections 表中添加：
+		["错误拼音"] = { text = "正确文本", comment = "正确读音/写法" }
 --]]
 
 local M = {}
@@ -195,21 +227,25 @@ local function split(input, sep)
     return result
 end
 
--- 分割拼音并比较是否每一项的开头部分一致
-local function is_correction(correct, preedit, delimiter)
-    local correct_parts = split(correct, delimiter)
-    local preedit_parts = split(preedit, delimiter)
-    for i = 1, math.min(#correct_parts, #preedit_parts) do
-        if not correct_parts[i]:find("^" .. preedit_parts[i]) then
-            return true
-        end
+-- 判断输入是否是拼音的前缀
+local function is_prefix_of_input(pinyin, preedit)
+    if not preedit or preedit == "" then
+        return false
     end
-    return false
+
+    -- 移除空格
+    local pinyin_clean = pinyin:gsub("%s", "")
+    local preedit_clean = preedit:gsub("%s", "")
+
+    -- 检查 preedit 是否是 pinyin 的前缀
+    return pinyin_clean:sub(1, #preedit_clean) == preedit_clean
 end
 
 function M.func(input, env)
+    local cand_index = 0
+
     for cand in input:iter() do
-        -- cand.comment 是目前输入的词汇的完整拼音
+        cand_index = cand_index + 1
         local prefix, pinyin = cand.comment:match("^([*+]?)%((.-)%)$")
         if pinyin and #pinyin > 0 then
             local correction_pinyin = pinyin
@@ -218,18 +254,18 @@ function M.func(input, env)
             end
             local c = M.corrections[correction_pinyin]
             if c and cand.text == c.text then
+                -- 容错词：显示正确读音/写法
                 cand:get_genuine().comment = string.gsub(M.style, "{comment}", prefix .. c.comment)
-            else
-                -- 20241002 是否保持原本注释；如: 拼音
-                -- 20241215 如果不包含模糊拼音的矫正，依然删除注释
-                local correct_pinyin = pinyin
-                local preedit_pinyin = cand.preedit
-                local correction = is_correction(correct_pinyin, preedit_pinyin, env.delimiter or " ")
-                if env.keep_comment and correction then
-                    cand:get_genuine().comment = string.gsub(M.style, "{comment}", prefix .. correct_pinyin)
+            elseif cand_index == 1 and env.keep_comment then
+                -- 第一个候选词：只有当输入不是拼音的前缀时，才显示拼音
+                if not is_prefix_of_input(pinyin, cand.preedit) then
+                    cand:get_genuine().comment = string.gsub(M.style, "{comment}", prefix .. pinyin)
                 else
                     cand:get_genuine().comment = prefix .. ""
                 end
+            else
+                -- 其他候选词：清除拼音注释
+                cand:get_genuine().comment = prefix .. ""
             end
         end
         yield(cand)

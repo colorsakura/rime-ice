@@ -17,7 +17,7 @@
 schema:
   schema_id: double_pinyin
   name: 自然码双拼
-  version: "2025.04.24"
+  version: "2026.02.26"
   author:
     - Dvel
   description: |
@@ -51,7 +51,7 @@ switches:
 engine:
   processors:
     - lua_processor@*select_character  # 以词定字
-    # - ascii_composer                 # 禁用内部的 ascii_composer 模式
+    - ascii_composer
     - recognizer
     - key_binder
     - speller
@@ -150,7 +150,7 @@ pin_cand_filter:
 # Lua 配置: 长词优先
 long_word_filter:
   count: 20
-  idx: 3
+  idx: 2
 
 
 # 主翻译器，拼音
@@ -390,4 +390,4 @@ speller:
     - xform/(.)ou$/$1Ⓑ/
     - xform/in$/Ⓝ/
     - xlit/ⓆⓌⓇⓉⓎⓊⒾⓄⓅⓈⒹⒻⒼⒽⓂⒿⒸⓀⓁⓏⓍⓋⒷⓃ/qwrtyuiopsdfghmjcklzxvbn/
-    - abbrev/^(.).+$/$1/  # 首字母简拼，开启后会导致 3 个字母时 kj'x 变成 k'jx 的问题
+    # - abbrev/^(.).+$/$1/  # 首字母简拼，开启后会导致 3 个字母时 kj'x 变成 k'jx 的问题
