@@ -3,7 +3,7 @@
 
 # 方案说明
 schema:
-  schema_id: rime_ice
+  schema_id: ice
   name: 雾凇拼音
   version: "2026.03.12"
   author:
@@ -283,9 +283,11 @@ pin_cand_filter:
 # 主翻译器，拼音
 translator:
   dictionary: core             # 挂载词库 core.dict.yaml
-  packs:                        # 挂载扩展包
+  packs:                       # 挂载扩展包
     - ext
+    - cell
   enable_word_completion: true # 大于 4 音节的词条自动补全，librime > 1.11.2
+  prism: ice                   # 多方案共用一个词库时，为避免冲突，需要用 prism 指定一个名字。
   spelling_hints: 4            # corrector.lua ：为了让错音错字提示的 Lua 同时适配全拼双拼，将拼音显示在 comment 中
   always_show_comments: true   # corrector.lua ：Rime 默认在 preedit 等于 comment 时取消显示 comment，这里强制一直显示，供 corrector.lua 做判断用。
   keep_comments: true          # corrector.lua ：是否保留由 translator/spelling_hints 生成的原始 comment (通常是全拼)
