@@ -1,20 +1,18 @@
+<div align="center">
+
 # 雾凇拼音
 
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL--3.0--only-34ad9b)](https://www.gnu.org/licenses/gpl-3.0.txt)
 ![GitHub Repo stars](https://img.shields.io/github/stars/colorsakura/rime-ice)
+[![Wiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/colorsakura/rime-ice)
 
+</div>
 
 ![demo](./others/demo.webp)
 
-功能齐全，词库体验良好，长期更新修订。
-
 <br>
 
-[Rime Input Method Engine / 中州韵输入法引擎](https://rime.im/) 是一个跨平台的输入法算法框架。
-
-这里是 Rime 的一份配置仓库，用户需要下载各平台对应的前端，并将此配置应用到配置目录。
-
-雾凇拼音提供了一套开箱即用的完整配置，包含输入方案（全拼、常见双拼）、长期维护的开源词库及各项扩展功能。
+雾凇拼音提供了一套开箱即用的完整配置，包含输入方案（**全拼、自然码双拼**）、长期维护的开源词库及各项扩展功能。
 
 详细介绍：[Rime 配置：雾凇拼音](https://dvel.me/posts/rime-ice/)
 
@@ -301,15 +299,3 @@ patch:
 感谢所有贡献者。
 
 <!-- 搜狗转 Rime：[lewangdev/scel2txt](https://github.com/lewangdev/scel2txt) -->
-
-Thanks to JetBrains for the OSS development license.
-
-[![JetBrains](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
-
-<br>
-
-## 赞助 ☕
-
-如果觉得项目不错，可以请 Dvel 吃个煎饼馃子。
-
-<img src="./others/sponsor.webp" alt="请 Dvel 吃个煎饼馃子" width=600 />

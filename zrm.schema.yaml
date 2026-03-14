@@ -15,13 +15,13 @@
 
 # 方案说明
 schema:
-  schema_id: double_pinyin_mspy
-  name: 微软双拼
+  schema_id: zrm
+  name: 自然码双拼
   version: "2026.03.12"
   author:
     - Dvel
   description: |
-    雾凇拼音 - 微软双拼
+    雾凇拼音 - 自然码双拼
     https://github.com/iDvel/rime-ice
   dependencies:
     - melt_eng        # 英文输入，作为次翻译器挂载到拼音方案
@@ -37,8 +37,6 @@ switches:
     states: [ 中, Ａ ]
   - name: ascii_punct  # 中英标点
     states: [ ¥, $ ]
-  - name: traditionalization
-    states: [ 简, 繁 ]
   - name: emoji
     states: [ 💀, 😄 ]
     reset: 1
@@ -87,9 +85,9 @@ engine:
     - reverse_lookup_filter@radical_reverse_lookup  # 部件拆字滤镜
     - lua_filter@*autocap_filter                    # 英文自动大写
     - lua_filter@*pin_cand_filter                   # 置顶候选项（顺序要求：置顶候选项 > Emoji > 简繁切换）
+    - lua_filter@*long_word_filter                  # 长词优先（顺序要求：长词优先 > Emoji）
     - lua_filter@*reduce_english_filter             # 降低部分英语单词在候选项的位置
     - simplifier@emoji                              # Emoji
-    - simplifier@traditionalize                     # 简繁切换
     - lua_filter@*search@radical_pinyin             # 部件拆字辅码
     - uniquifier                                    # 去重
 
@@ -149,14 +147,20 @@ pin_cand_filter:
   # 格式：编码<Tab>字词1<Space>字词2……
   - d	的
 
+# Lua 配置: 长词优先
+long_word_filter:
+  count: 20
+  idx: 2
+
 
 # 主翻译器，拼音
 translator:
   dictionary: core              # 挂载词库 core.dict.yaml
   packs:                        # 挂载扩展包
     - ext
+    - cell
   enable_word_completion: true  # 大于 4 音节的词条自动补全，librime > 1.11.2
-  prism: double_pinyin_mspy     # 多方案共用一个词库时，为避免冲突，需要用 prism 指定一个名字。
+  prism: zrm                    # 多方案共用一个词库时，为避免冲突，需要用 prism 指定一个名字。
   spelling_hints: 4             # corrector.lua ：为了让错音错字提示的 Lua 同时适配全拼双拼，将拼音显示在 comment 中
   always_show_comments: true    # corrector.lua ：Rime 默认在 preedit 等于 comment 时取消显示 comment，这里强制一直显示，供 corrector.lua 做判断用。
   keep_comments: true           # corrector.lua ：是否保留由 translator/spelling_hints 生成的原始 comment (通常是全拼)
@@ -165,19 +169,18 @@ translator:
     - xform/^/(/
     - xform/$/)/
   preedit_format:               # preedit_format 影响到输入框的显示和“Shift+回车”上屏的字符
-    - xform/([aoe])(\w)/0$2/
+    - xform/(^|[ '])aa/$1a/
+    - xform/(^|[ '])ee/$1e/
+    - xform/(^|[ '])oo/$1o/
     - xform/([bpmnljqxy])n/$1in/
     - xform/(\w)g/$1eng/
     - xform/(\w)q/$1iu/
     - xform/([gkhvuirzcs])w/$1ua/
     - xform/(\w)w/$1ia/
     - xform/([dtnlgkhjqxyvuirzcs])r/$1uan/
-    - xform/0r/er/
-    - xform/([dtgkhvuirzcs])v/$1ui/
-    - xform/(\w)v/$1ve/
     - xform/(\w)t/$1ve/
     - xform/([gkhvuirzcs])y/$1uai/
-    - xform/(\w)y/$1v/
+    - xform/(\w)y/$1ing/
     - xform/([dtnlgkhvuirzcs])o/$1uo/
     - xform/(\w)p/$1un/
     - xform/([jqx])s/$1iong/
@@ -192,10 +195,10 @@ translator:
     - xform/(\w)z/$1ei/
     - xform/(\w)x/$1ie/
     - xform/(\w)c/$1iao/
+    - xform/([dtgkhvuirzcs])v/$1ui/
     - xform/(\w)b/$1ou/
     - xform/(\w)m/$1ian/
-    - xform/(\w);/$1ing/
-    - xform/0(\w)/$1/
+    - xform/([aoe])\1(\w)/$1$2/
     - "xform/(^|[ '])v/$1zh/"
     - "xform/(^|[ '])i/$1ch/"
     - "xform/(^|[ '])u/$1sh/"
@@ -218,7 +221,7 @@ melt_eng:
 # 中英混合词汇
 cn_en:
   dictionary: ""
-  user_dict: en_dicts/cn_en_mspy
+  user_dict: en_dicts/cn_en_double_pinyin
   db_class: stabledb
   enable_completion: true
   enable_sentence: false
@@ -242,14 +245,6 @@ emoji:
   option_name: emoji         # 对应 switches 中的 name
   opencc_config: emoji.json  # 选择要加载的 OpenCC 配置
   inherit_comment: false     # 在 corrector.lua 及反查中，emoji 的 comment 显示为空
-
-
-# 简繁切换
-traditionalize:
-  option_name: traditionalization  # 对应 switches 中的 name
-  opencc_config: s2t.json          # s2t.json | s2hk.json | s2tw.json | s2twp.json （Rime 内置配置，在程序目录可找到）
-  tips: none                       # 转换提示: all 都显示 | char 仅单字显示 | none 不显示。
-  tags: [ abc, number, gregorian_to_lunar ]  # 限制在对应 tag，不对其他如反查的内容做简繁转换
 
 
 # 标点符号
@@ -294,7 +289,7 @@ recognizer:
   import_preset: default                # 从 default.yaml 继承通用的
   patterns:                             # 再增加方案专有的：
     punct: "^V([0-9]|10|[A-Za-z]+)$"    # 响应 symbols_caps_v.yaml 的 symbols
-    radical_lookup: "^uU[a-z;]+$"       # 响应部件拆字的反查，触发前缀与 radical_lookup/prefix 匹配
+    radical_lookup: "^uU[a-z]+$"        # 响应部件拆字的反查，触发前缀与 radical_lookup/prefix 匹配
     unicode: "^U[a-f0-9]+"              # 脚本将自动获取第 2 个字符 U 作为触发前缀，响应 lua_translator@*unicode，输出 Unicode 字符
     number: "^R[0-9]+[.]?[0-9]*"        # 脚本将自动获取第 2 个字符 R 作为触发前缀，响应 lua_translator@*number_translator，数字金额大写
     calculator: "^cC.+"                 # 响应 lua_translator@*calc_translator，计算器。前缀设定项 calculator/prefix
@@ -325,20 +320,58 @@ editor:
 # 拼写设定
 speller:
   # 如果不想让什么标点直接上屏，可以加在 alphabet，或者编辑标点符号为两个及以上的映射
-  alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA;`
-  # initials 定义仅作为始码的按键，排除 ` ; 让单个的 ` ; 可以直接上屏
+  alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA`
+  # initials 定义仅作为始码的按键，排除 ` 让单个的 ` 可以直接上屏
   initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA
   delimiter: " '"  # 第一位<空格>是拼音之间的分隔符；第二位<'>表示可以手动输入单引号来分割拼音。
   algebra:
-    - erase/^xx$/
+    # 模糊音区域
+    # 依据个人情况修改注释～
+    # 注释格式：键盘的输入码 -> 转化后的输入码
+
+    # 声母部分
+    - derive/^([z])h/$1/ # z -> zh
+    - derive/^([z])([^h])/$1h$2/ # zh -> z
+    - derive/^([c])h/$1/ # c -> ch
+    - derive/^([c])([^h])/$1h$2/ # ch -> c
+    - derive/^([s])h/$1/ # s -> sh
+    - derive/^([s])([^h])/$1h$2/ # sh -> s
+    # - derive/^l/n/ # n -> l
+    # - derive/^n/l/ # l -> n
+    # - derive/^r/l/ # l -> r
+    # - derive/^r/y/ # y -> r
+    # - derive/^hu$/fu/ # fu -> hu
+    # - derive/^fu$/hu/ # hu -> fu
+
+    # 韵母部分
+    - derive/([^iu])([a])n$/$1$2ng/ # ang -> an
+    - derive/([^iu])([a])ng$/$1$2n/ # an -> ang
+    - derive/([u])an$/$1ang/ # uang -> uan
+    - derive/([u])ang$/$1an/ # uan -> uang
+    - derive/([e])n$/$1ng/ # eng -> en
+    - derive/([e])ng$/$1n/ # en -> eng
+    - derive/([i])n$/$1ng/ # ing -> in
+    - derive/([i])ng$/$1n/ # in -> ing
+    - derive/([i])an$/$1ang/ # iang -> ian
+    - derive/([i])ang$/$1an/ # ian -> iang
+    # 由于双拼特性，无需 uang <-> iang
+
+    # 其它模糊音
+    # - derive/^hui$/fei/ # fei -> hui
+    # - derive/^fei$/hui/ # hui -> fei
+    # - derive/^huang$/wang/ # wang -> huang
+    # - derive/^wang$/huang/ # huang -> wang
+    # - derive/^([bpmfw])eng$/$1ong/ # bpmfw 后接 ong -> bpmfw 后接 eng
+
+    # 自然码双拼码表
     - derive/^([jqxy])u$/$1v/
-    - derive/^([aoe].*)$/o$1/
-    - xform/^([ae])(.*)$/$1$1$2/
+    - derive/^([aoe])([ioun])$/$1$1$2/
+    - xform/^([aoe])(ng)?$/$1$1$2/
     - xform/iu$/Ⓠ/
     - xform/[iu]a$/Ⓦ/
-    - xform/er$|[uv]an$/Ⓡ/
+    - xform/[uv]an$/Ⓡ/
     - xform/[uv]e$/Ⓣ/
-    - xform/v$|uai$/Ⓨ/
+    - xform/ing$|uai$/Ⓨ/
     - xform/^sh/Ⓤ/
     - xform/^ch/Ⓘ/
     - xform/^zh/Ⓥ/
@@ -357,9 +390,7 @@ speller:
     - xform/(.)ei$/$1Ⓩ/
     - xform/ie$/Ⓧ/
     - xform/ui$/Ⓥ/
-    - derive/Ⓣ$/Ⓥ/
     - xform/(.)ou$/$1Ⓑ/
     - xform/in$/Ⓝ/
-    - xform/ing$/;/
     - xlit/ⓆⓌⓇⓉⓎⓊⒾⓄⓅⓈⒹⒻⒼⒽⓂⒿⒸⓀⓁⓏⓍⓋⒷⓃ/qwrtyuiopsdfghmjcklzxvbn/
     # - abbrev/^(.).+$/$1/  # 首字母简拼，开启后会导致 3 个字母时 kj'x 变成 k'jx 的问题
