@@ -1,0 +1,29 @@
+# Rime dictionary
+# encoding: utf-8
+
+---
+name: cell
+version: "2026.03.12"
+import_tables:
+  - dict/cell/animal
+  - dict/cell/chess
+  - dict/cell/composite
+  - dict/cell/computer
+  - dict/cell/exthot
+  - dict/cell/food
+  - dict/cell/game
+  - dict/cell/geography
+  - dict/cell/history
+  - dict/cell/idiom
+  - dict/cell/industry_product
+  - dict/cell/inputmethod
+  - dict/cell/literature
+  - dict/cell/media
+  - dict/cell/medication
+  - dict/cell/music
+  - dict/cell/name
+  - dict/cell/name2
+  - dict/cell/place
+  - dict/cell/shulihua
+  - dict/cell/sport
+...

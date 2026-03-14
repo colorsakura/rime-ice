@@ -5,7 +5,8 @@
 name: ext
 version: "2026.03.12"
 import_tables:
+  - dict/ext/41448
   - dict/ext/sogou
-  - dict/ext/zhwiki
   - dict/ext/tencent
+  - dict/ext/zhwiki
 ...

@@ -1,8 +1,6 @@
 # Rime dictionary
 # encoding: utf-8
-#
-# https://github.com/iDvel/rime-ice
-# ------- 一些杂项，按需选择 -------
+
 ---
 name: others
 version: "2025.04.24"

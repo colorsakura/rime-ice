@@ -1,11 +1,7 @@
-**此仓库不再跟踪上游，使用前请优先查看上游仓库是否符合您的需求。**
-
 # 雾凇拼音
 
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL--3.0--only-34ad9b)](https://www.gnu.org/licenses/gpl-3.0.txt)
-[![GitHub Release](https://img.shields.io/github/v/release/iDvel/rime-ice?filter=!nightly)](https://github.com/iDvel/rime-ice/releases/)
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/iDvel/rime-ice/release.yml)](https://github.com/iDvel/rime-ice/actions/workflows/release.yml)
-![GitHub Repo stars](https://img.shields.io/github/stars/iDvel/rime-ice)
+![GitHub Repo stars](https://img.shields.io/github/stars/colorsakura/rime-ice)
 
 
 ![demo](./others/demo.webp)
