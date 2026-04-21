@@ -3,7 +3,7 @@
 
 ---
 name: ext
-version: "2026.03.12"
+version: "2026.04.26"
 import_tables:
   # - dict/ext/41448
   - dict/ext/sogou
