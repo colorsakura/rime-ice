@@ -1,5 +1,6 @@
 # Rime dictionary
 # encoding: utf-8
+# vim: noet
 #
 # https://github.com/iDvel/rime-ice
 # ------- 补充的英文词汇 -------
@@ -8,6 +9,9 @@
 # en_ext.dict.yaml 大部分是缩写或互联网相关
 ---
 name: en_ext
-version: "2025.04.24"
+version: "2026.06.01"
 sort: by_weight
 ...
+ArchLinux	archlinux
+Debian	debian
+Linux	linux

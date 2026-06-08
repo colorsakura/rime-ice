@@ -1,6 +1,6 @@
-# vim: noet
 # Rime dictionary
 # encoding: utf-8
+# vim: noet
 #
 #
 # https://github.com/iDvel/rime-ice
@@ -10,16 +10,9 @@
 # en.dict.yaml 放置正经单词
 # en_ext.dict.yaml 大部分是缩写或互联网相关
 #
-# 来源：
-# 常见两万词 [20k.txt](https://github.com/first20hours/google-10000-english/)
-# 合并不重复的 1000 多左右 [融合拼音方案](https://github.com/tumuyan/rime-melt) 的英文词库
-#
-# 注释掉单个字母、绝大部分两个字母的缩写、冷门缩写
-# 转化应当大写的单词
 ---
 name: en
 version: "2026.05.31"
 sort: by_weight
 ...
-AA	aa
-Debian	debian
+good	good
